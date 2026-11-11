@@ -1,0 +1,36 @@
+<%- include('../parciales/cabecera', { titulo: 'Mis reservas' }) %>
+
+<p><a href="/reservas/nueva">Hacer una reserva nueva</a></p>
+
+<% if (reservas.length === 0) { %>
+  <p>Todavía no tienes reservas.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>Equipo</th><th>Fecha</th><th>Turno</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% for (const reserva of reservas) { %>
+        <tr>
+          <td><%= reserva.equipo %></td>
+          <td><%= reserva.fecha %></td>
+          <td><%= reserva.turno %></td>
+          <td>
+            <span class="<%= reserva.activa ? 'estado-ok' : 'estado-ko' %>"><%= reserva.estado %></span>
+          </td>
+          <td>
+            <%# El botón solo aparece si se puede cancelar, pero el servidor lo vuelve a comprobar en el POST. %>
+            <% if (reserva.cancelable) { %>
+              <form method="post" action="/reservas/<%= reserva.id %>/cancelar">
+                <%- include('../parciales/csrf') %>
+                <button type="submit">Cancelar</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include('../parciales/pie') %>

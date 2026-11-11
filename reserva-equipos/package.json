@@ -1,0 +1,28 @@
+{
+  "name": "reserva-equipos",
+  "version": "1.0.0",
+  "description": "Práctica UD2 y UD3 de DWES: sistema de reserva de equipos informáticos",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --env-file=.env src/server.js",
+    "test": "vitest run",
+    "check:ts": "tsc --noEmit",
+    "build:ts": "tsc",
+    "demo:ts": "node dist/demo.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "ejs": "^7.0.2",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.4",
+    "express-session": "^1.19.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "supertest": "^7.3.2",
+    "typescript": "5.9",
+    "vitest": "^5.1.0"
+  }
+}

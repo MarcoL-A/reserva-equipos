@@ -1,0 +1,65 @@
+<%- include('../parciales/cabecera', { titulo: 'Catálogo de equipos' }) %>
+
+<% if (preferenciaAplicada) { %>
+  <p class="nota">
+    Mostrando tu tipo preferido: <strong><%= preferenciaAplicada %></strong>.
+    <a href="/equipos?tipo=">Ver todos</a>
+  </p>
+<% } %>
+
+<%# Filtros: es un formulario GET, así los filtros viajan en la URL (?tipo=...&operativos=true). %>
+<form method="get" action="/equipos" class="filtros">
+  <label for="tipo">Tipo</label>
+  <select id="tipo" name="tipo">
+    <option value="" <%= filtros.tipo === '' ? 'selected' : '' %>>Todos</option>
+    <option value="portatil" <%= filtros.tipo === 'portatil' ? 'selected' : '' %>>Portátil</option>
+    <option value="sobremesa" <%= filtros.tipo === 'sobremesa' ? 'selected' : '' %>>Sobremesa</option>
+  </select>
+
+  <label>
+    <input type="checkbox" name="operativos" value="true" <%= filtros.soloOperativos ? 'checked' : '' %>>
+    Solo operativos
+  </label>
+
+  <button type="submit">Filtrar</button>
+</form>
+
+<% if (equipos.length === 0) { %>
+  <p>No hay equipos que coincidan con el filtro.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>Código</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% for (const equipo of equipos) { %>
+        <tr>
+          <td><%= equipo.codigo %></td>
+          <td><%= equipo.nombre %></td>
+          <td><%= equipo.tipo %></td>
+          <td>
+            <span class="<%= equipo.operativo ? 'estado-ok' : 'estado-ko' %>"><%= equipo.estado %></span>
+          </td>
+          <td><a href="/equipos/<%= equipo.id %>">Ver ficha</a></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+<% } %>
+
+<%# Cookie de preferencias: recuerda el tipo preferido en este navegador. %>
+<section class="panel">
+  <h2>Tipo de equipo preferido</h2>
+  <p>Se usará como filtro inicial cada vez que abras el catálogo.</p>
+  <form method="post" action="/preferencias/tipo" class="filtros">
+    <label for="preferido">Prefiero</label>
+    <select id="preferido" name="tipo">
+      <option value="" <%= preferencia === '' ? 'selected' : '' %>>Sin preferencia</option>
+      <option value="portatil" <%= preferencia === 'portatil' ? 'selected' : '' %>>Portátil</option>
+      <option value="sobremesa" <%= preferencia === 'sobremesa' ? 'selected' : '' %>>Sobremesa</option>
+    </select>
+    <button type="submit">Guardar preferencia</button>
+  </form>
+</section>
+
+<%- include('../parciales/pie') %>

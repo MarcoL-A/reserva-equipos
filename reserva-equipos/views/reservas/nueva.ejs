@@ -1,0 +1,54 @@
+<%- include('../parciales/cabecera', { titulo: vm.titulo }) %>
+
+<%- include('../parciales/errores', { errores: vm.errores }) %>
+
+<%# PASO 1. Formulario GET: elegir fecha y turno. El servidor responde con los
+    equipos disponibles para ese hueco, sin JavaScript en el navegador. %>
+<section class="panel">
+  <h2>1. Elige fecha y turno</h2>
+  <form method="get" action="/reservas/nueva" class="formulario">
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha" name="fecha" min="<%= vm.hoy %>" value="<%= vm.valores.fecha %>" required>
+
+    <label for="turno">Turno</label>
+    <select id="turno" name="turno" required>
+      <option value="">Selecciona un turno</option>
+      <% for (const opcion of vm.turnos) { %>
+        <option value="<%= opcion.valor %>" <%= opcion.valor === vm.valores.turno ? 'selected' : '' %>><%= opcion.texto %></option>
+      <% } %>
+    </select>
+
+    <button type="submit">Ver equipos disponibles</button>
+  </form>
+</section>
+
+<%# PASO 2. Formulario POST: sus opciones dependen de los equipos disponibles.
+    La fecha y el turno viajan en campos ocultos; el usuario NO viaja: el
+    servidor lo conoce por la sesión. %>
+<% if (vm.consultado) { %>
+  <section class="panel">
+    <h2>2. Elige equipo para el <%= vm.fechaTexto %> (<%= vm.turnoTexto %>)</h2>
+
+    <% if (!vm.puedeEnviar) { %>
+      <p>No hay equipos disponibles para esa fecha y turno.</p>
+    <% } else { %>
+      <form method="post" action="/reservas" class="formulario">
+        <%- include('../parciales/csrf') %>
+        <input type="hidden" name="fecha" value="<%= vm.valores.fecha %>">
+        <input type="hidden" name="turno" value="<%= vm.valores.turno %>">
+
+        <label for="equipoId">Equipo</label>
+        <select id="equipoId" name="equipoId" required>
+          <option value="">Selecciona un equipo</option>
+          <% for (const opcion of vm.equipos) { %>
+            <option value="<%= opcion.valor %>" <%= opcion.valor === vm.valores.equipoId ? 'selected' : '' %>><%= opcion.texto %></option>
+          <% } %>
+        </select>
+
+        <button type="submit">Reservar</button>
+      </form>
+    <% } %>
+  </section>
+<% } %>
+
+<%- include('../parciales/pie') %>

@@ -1,0 +1,23 @@
+<%- include('../parciales/cabecera', { titulo: 'Mi perfil' }) %>
+
+<%# "usuario" es el modelo público: no contiene el hash de la contraseña. %>
+<dl class="ficha">
+  <dt>Nombre</dt>
+  <dd><%= usuario.nombre %></dd>
+  <dt>Correo electrónico</dt>
+  <dd><%= usuario.email %></dd>
+  <dt>Rol</dt>
+  <dd><%= usuario.rol %></dd>
+</dl>
+
+<p>
+  <a href="/mis-reservas">Ver mis reservas</a> ·
+  <a href="/reservas/nueva">Hacer una reserva</a>
+</p>
+
+<form method="post" action="/logout">
+  <%- include('../parciales/csrf') %>
+  <button type="submit">Cerrar sesión</button>
+</form>
+
+<%- include('../parciales/pie') %>

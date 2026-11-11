@@ -1,0 +1,58 @@
+<%- include('../parciales/cabecera', { titulo: 'Administración de equipos' }) %>
+
+<p><a href="/admin/reservas">Ir a la administración de reservas</a></p>
+
+<table>
+  <thead>
+    <tr><th>Id</th><th>Código</th><th>Nombre</th><th>Tipo</th><th>Estado</th><th>Cambiar estado</th></tr>
+  </thead>
+  <tbody>
+    <% for (const equipo of equipos) { %>
+      <tr>
+        <td><%= equipo.id %></td>
+        <td><%= equipo.codigo %></td>
+        <td><%= equipo.nombre %></td>
+        <td><%= equipo.tipo %></td>
+        <td>
+          <span class="<%= equipo.operativo ? 'estado-ok' : 'estado-ko' %>"><%= equipo.estado %></span>
+        </td>
+        <td>
+          <%# El nuevo estado es el contrario del actual. Los dos valores son textos fijos de la plantilla. %>
+          <form method="post" action="/admin/equipos/<%= equipo.id %>/estado">
+            <%- include('../parciales/csrf') %>
+            <input type="hidden" name="estado" value="<%= equipo.operativo ? 'fuera_de_servicio' : 'operativo' %>">
+            <button type="submit"><%= equipo.operativo ? 'Marcar fuera de servicio' : 'Marcar operativo' %></button>
+          </form>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+<section class="panel">
+  <h2>Añadir equipo</h2>
+
+  <%- include('../parciales/errores', { errores }) %>
+
+  <form method="post" action="/admin/equipos" class="formulario">
+    <%- include('../parciales/csrf') %>
+
+    <label for="codigo">Código (por ejemplo PORT-002)</label>
+    <input type="text" id="codigo" name="codigo" value="<%= valores.codigo %>" required>
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" value="<%= valores.nombre %>" required>
+
+    <label for="tipo">Tipo</label>
+    <select id="tipo" name="tipo" required>
+      <option value="">Selecciona un tipo</option>
+      <% for (const opcion of tipos) { %>
+        <option value="<%= opcion.valor %>" <%= opcion.valor === valores.tipo ? 'selected' : '' %>><%= opcion.texto %></option>
+      <% } %>
+    </select>
+
+    <button type="submit">Añadir equipo</button>
+  </form>
+</section>
+
+<%- include('../parciales/pie') %>

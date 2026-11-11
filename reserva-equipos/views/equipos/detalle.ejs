@@ -1,0 +1,37 @@
+<%- include('../parciales/cabecera', { titulo: 'Ficha del equipo' }) %>
+
+<dl class="ficha">
+  <dt>Código</dt>
+  <dd><%= equipo.codigo %></dd>
+  <dt>Nombre</dt>
+  <dd><%= equipo.nombre %></dd>
+  <dt>Tipo</dt>
+  <dd><%= equipo.tipo %></dd>
+  <dt>Estado</dt>
+  <dd><span class="<%= equipo.operativo ? 'estado-ok' : 'estado-ko' %>"><%= equipo.estado %></span></dd>
+</dl>
+
+<h2>Disponibilidad</h2>
+<% if (!equipo.operativo) { %>
+  <p>Este equipo está fuera de servicio y no se puede reservar.</p>
+<% } else { %>
+  <p>
+    La disponibilidad depende de la fecha y del turno: un equipo puede estar
+    libre por la mañana y reservado por la tarde.
+  </p>
+  <% if (ocupados.length === 0) { %>
+    <p>No tiene turnos reservados próximamente.</p>
+  <% } else { %>
+    <p>Turnos ya reservados:</p>
+    <ul>
+      <% for (const hueco of ocupados) { %>
+        <li><%= hueco.fecha %> · <%= hueco.turno %></li>
+      <% } %>
+    </ul>
+  <% } %>
+  <p><a href="/reservas/nueva">Reservar un equipo</a></p>
+<% } %>
+
+<p><a href="/equipos">Volver al catálogo</a></p>
+
+<%- include('../parciales/pie') %>

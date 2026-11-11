@@ -1,0 +1,37 @@
+<%- include('../parciales/cabecera', { titulo: 'Administración de reservas' }) %>
+
+<p><a href="/admin/equipos">Ir a la administración de equipos</a></p>
+
+<% if (reservas.length === 0) { %>
+  <p>No hay reservas.</p>
+<% } else { %>
+  <table>
+    <thead>
+      <tr><th>Id</th><th>Usuario</th><th>Equipo</th><th>Fecha</th><th>Turno</th><th>Estado</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% for (const reserva of reservas) { %>
+        <tr>
+          <td><%= reserva.id %></td>
+          <td><%= reserva.usuario %></td>
+          <td><%= reserva.equipo %></td>
+          <td><%= reserva.fecha %></td>
+          <td><%= reserva.turno %></td>
+          <td>
+            <span class="<%= reserva.activa ? 'estado-ok' : 'estado-ko' %>"><%= reserva.estado %></span>
+          </td>
+          <td>
+            <% if (reserva.cancelable) { %>
+              <form method="post" action="/admin/reservas/<%= reserva.id %>/cancelar">
+                <%- include('../parciales/csrf') %>
+                <button type="submit">Cancelar</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+<% } %>
+
+<%- include('../parciales/pie') %>

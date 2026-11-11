@@ -1,0 +1,267 @@
+/* Estilos de la práctica: una sola hoja, sin dependencias. */
+
+:root {
+  --fondo: #f5f6f8;
+  --superficie: #ffffff;
+  --texto: #1d2733;
+  --texto-suave: #5b6876;
+  --borde: #d8dee6;
+  --principal: #1f5fae;
+  --principal-oscuro: #184a88;
+  --ok-fondo: #e3f4e8;
+  --ok-texto: #1c6b36;
+  --ko-fondo: #fbe6e4;
+  --ko-texto: #a12a22;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--principal);
+}
+
+/* Cabecera y navegación */
+
+.cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding: 0.9rem 1.5rem;
+  background: var(--superficie);
+  border-bottom: 1px solid var(--borde);
+}
+
+.marca {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.cabecera nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.1rem;
+}
+
+.cabecera nav a {
+  text-decoration: none;
+}
+
+.cabecera nav a:hover {
+  text-decoration: underline;
+}
+
+.en-linea {
+  display: inline;
+  margin: 0;
+}
+
+/* Contenido */
+
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 1.7rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  margin-top: 0;
+}
+
+.panel {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+/* Mensajes */
+
+.aviso,
+.errores,
+.nota {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.aviso {
+  background: var(--ok-fondo);
+  color: var(--ok-texto);
+}
+
+.errores {
+  background: var(--ko-fondo);
+  color: var(--ko-texto);
+}
+
+.errores p {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+}
+
+.errores ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.nota {
+  background: #e8f0fb;
+}
+
+/* Formularios */
+
+.formulario {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 26rem;
+}
+
+.formulario label {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 1rem;
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select {
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--borde);
+  border-radius: 6px;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+
+button {
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--principal);
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--principal-oscuro);
+}
+
+.formulario button {
+  margin-top: 0.9rem;
+  justify-self: start;
+}
+
+/* Botón con aspecto de enlace (cerrar sesión en el menú) */
+button.enlace {
+  padding: 0;
+  background: none;
+  color: var(--principal);
+}
+
+button.enlace:hover {
+  background: none;
+  text-decoration: underline;
+}
+
+/* Tablas y fichas */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+}
+
+th,
+td {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--borde);
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  background: #eef1f5;
+  font-size: 0.9rem;
+}
+
+td form {
+  margin: 0;
+}
+
+.ficha {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.4rem 1.25rem;
+  padding: 1.25rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+}
+
+.ficha dt {
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.ficha dd {
+  margin: 0;
+}
+
+.estado-ok,
+.estado-ko {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+
+.estado-ok {
+  background: var(--ok-fondo);
+  color: var(--ok-texto);
+}
+
+.estado-ko {
+  background: var(--ko-fondo);
+  color: var(--ko-texto);
+}
+
+/* Pie */
+
+.pie {
+  padding: 1.5rem;
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+  text-align: center;
+}

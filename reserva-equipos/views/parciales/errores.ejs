@@ -1,0 +1,11 @@
+<%# Lista de mensajes de validación. Recibe "errores": un array de textos. %>
+<% if (errores.length > 0) { %>
+  <div class="errores" role="alert">
+    <p>Revisa los datos enviados:</p>
+    <ul>
+      <% for (const error of errores) { %>
+        <li><%= error %></li>
+      <% } %>
+    </ul>
+  </div>
+<% } %>

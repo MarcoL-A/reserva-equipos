@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= titulo %> · Reserva de equipos</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header class="cabecera">
+    <a class="marca" href="/equipos">Reserva de equipos</a>
+    <nav>
+      <a href="/equipos">Equipos</a>
+      <% if (usuarioActual) { %>
+        <a href="/reservas/nueva">Nueva reserva</a>
+        <a href="/mis-reservas">Mis reservas</a>
+        <%# Ocultar estos enlaces es solo comodidad: quien protege /admin es exigirRol en el servidor. %>
+        <% if (usuarioActual.rol === 'admin') { %>
+          <a href="/admin/equipos">Admin · Equipos</a>
+          <a href="/admin/reservas">Admin · Reservas</a>
+        <% } %>
+        <a href="/perfil"><%= usuarioActual.nombre %></a>
+        <form method="post" action="/logout" class="en-linea">
+          <%- include('./csrf') %>
+          <button type="submit" class="enlace">Cerrar sesión</button>
+        </form>
+      <% } else { %>
+        <a href="/login">Iniciar sesión</a>
+        <a href="/registro">Registro</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <h1><%= titulo %></h1>
+
+    <%# Mensaje de confirmación de un solo uso (ver middlewares/avisos.js). %>
+    <% if (aviso) { %>
+      <p class="aviso" role="status"><%= aviso %></p>
+    <% } %>
